@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MINU TUNNIPLAAN™</title>
+
+<style>
+/* =========================================================
+   ÜLDINE
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Comic Sans MS", "Arial", sans-serif;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #00e5ff 0px,
+            #00e5ff 12px,
+            #ff00d4 12px,
+            #ff00d4 24px
+        );
+    color: #111;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    background: #fff700;
+    border-bottom: 8px solid #000;
+    padding: 12px;
+    transform: rotate(-0.5deg);
+    box-shadow: 8px 8px 0 #000;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    font-size: clamp(22px, 5vw, 42px);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        3px 3px #ff00d4,
+        6px 6px #00e5ff;
+}
+
+.badge {
+    background: #ff4d00;
+    color: white;
+    border: 4px solid #000;
+    padding: 8px;
+    font-weight: bold;
+    transform: rotate(4deg);
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 15px;
+}
+
+.panel {
+    background: #ffffff;
+    border: 6px solid #000;
+    box-shadow: 12px 12px 0 #000;
+    padding: 18px;
+    margin-bottom: 30px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 26px;
+}
+
+/* =========================================================
+   JIGGLE
+========================================================= */
+
+@keyframes jiggle1 {
+    0% {
+        transform: rotate(-1deg) translate(0,0);
+    }
+
+    25% {
+        transform: rotate(2deg) translate(2px,-1px);
+    }
+
+    50% {
+        transform: rotate(-2deg) translate(-2px,2px);
+    }
+
+    75% {
+        transform: rotate(1deg) translate(1px,-2px);
+    }
+
+    100% {
+        transform: rotate(-1deg) translate(0,0);
+    }
+}
+
+@keyframes jiggle2 {
+    0% {
+        transform: translateY(0) rotate(1deg);
+    }
+
+    30% {
+        transform: translateY(-4px) rotate(-2deg);
+    }
+
+    60% {
+        transform: translateY(3px) rotate(2deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(1deg);
+    }
+}
+
+.jiggly {
+    animation: jiggle1 1.7s infinite;
+}
+
+.jiggly:nth-child(even) {
+    animation: jiggle2 1.3s infinite;
+}
+
+/* =========================================================
+   NÄDAL
+========================================================= */
+
+.week {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 9px;
+}
+
+.day-button {
+    min-height: 75px;
+    border: 5px solid #000;
+    background: #00ff66;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 900;
+    box-shadow: 6px 6px 0 #000;
+    transition: 0.1s;
+}
+
+.day-button:nth-child(2) {
+    background: #ff55cc;
+}
+
+.day-button:nth-child(3) {
+    background: #00e5ff;
+}
+
+.day-button:nth-child(4) {
+    background: #ff9900;
+}
+
+.day-button:nth-child(5) {
+    background: #a855ff;
+}
+
+.day-button:nth-child(6) {
+    background: #fff700;
+}
+
+.day-button:hover {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.day-button.active {
+    background: red;
+    color: white;
+    transform: rotate(-5deg) scale(1.08);
+}
+
+/* =========================================================
+   TUNNIPLAAN
+========================================================= */
+
+.schedule {
+    display: grid;
+    gap: 12px;
+}
+
+.lesson {
+    display: grid;
+    grid-template-columns: 80px 1fr 180px;
+    align-items: center;
+    min-height: 95px;
+    border: 5px solid #000;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 7px 7px 0 #000;
+    position: relative;
+}
+
+.lesson:hover {
+    animation: jiggle1 0.3s infinite;
+}
+
+.lesson:nth-child(1) {
+    background: #72f36b;
+}
+
+.lesson:nth-child(2) {
+    background: #67dfff;
+}
+
+.lesson:nth-child(3) {
+    background: #ff8cd9;
+}
+
+.lesson:nth-child(4) {
+    background: #d99cff;
+}
+
+.lesson:nth-child(5) {
+    background: #ffd75e;
+}
+
+.lesson:nth-child(6) {
+    background: #91ffbd;
+}
+
+.lesson:nth-child(7) {
+    background: #ff9966;
+}
+
+.lesson:nth-child(8) {
+    background: #c4a7ff;
+}
+
+.lesson:nth-child(9) {
+    background: #7fffd4;
+}
+
+.lesson-number {
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.lesson-name {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.lesson-room {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* =========================================================
+   UPLOAD
+========================================================= */
+
+.upload-box {
+    border: 5px dashed #000;
+    padding: 25px;
+    text-align: center;
+    background: #eee;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-button {
+    display: inline-block;
+    background: #ff00d4;
+    color: white;
+    border: 5px solid #000;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 7px 7px 0 #000;
+}
+
+.upload-button:hover {
+    transform: rotate(3deg);
+}
+
+#uploadedImage {
+    display: none;
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    margin-top: 20px;
+    border: 5px solid black;
+}
+
+/* =========================================================
+   ABSURDNE KUUPÄEVA VALIJA
+========================================================= */
+
+.date-selector {
+    background: #c8ff00;
+    border: 6px solid #000;
+    padding: 15px;
+    position: relative;
+}
+
+.date-selector select {
+    width: 100%;
+    padding: 15px;
+    border: 5px solid #000;
+    background: #ff00d4;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* =========================================================
+   EMAIL POPUP
+========================================================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    background: #fff700;
+    border: 8px solid #000;
+    box-shadow: 15px 15px 0 #ff00d4;
+    padding: 25px;
+    width: min(500px, 100%);
+    transform: rotate(-2deg);
+}
+
+.modal-box h2 {
+    font-size: 30px;
+}
+
+.fake-email {
+    background: white;
+    border: 5px solid black;
+    padding: 15px;
+    font-family: monospace;
+    overflow-wrap: anywhere;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 15px;
+    border: 5px solid #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.yes {
+    background: #00ff66;
+}
+
+.no {
+    background: #ff3333;
+    color: white;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: white;
+    padding: 15px 20px;
+    border: 4px solid #fff700;
+    font-weight: bold;
+    display: none;
+    z-index: 2000;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    main {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .week {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .lesson {
+        grid-template-columns: 55px 1fr;
+    }
+
+    .lesson-room {
+        grid-column: 2;
+        text-align: left;
+    }
+
+    .lesson-number {
+        font-size: 30px;
+    }
+
+    .lesson-name {
+        font-size: 21px;
+    }
+
+    .badge {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="logo">
+            MINU TUNNIPLAAN™
+        </div>
+
+        <div class="badge">
+            100% KINDEL
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- =====================================================
+         NÄDAL
+    ====================================================== -->
+
+    <section class="panel">
+
+        <h2>
+            🗓️ VALI PÄEV. ÄRA MÕTLE LIIGA PALJU.
+        </h2>
+
+        <div class="week">
+
+            <button class="day-button active" data-day="es">
+                ES<br>
+                <small>Esmaspäev</small>
+            </button>
+
+            <button class="day-button" data-day="te">
+                TE<br>
+                <small>Teisipäev</small>
+            </button>
+
+            <button class="day-button" data-day="ko">
+                KO<br>
+                <small>Kolmapäev</small>
+            </button>
+
+            <button class="day-button" data-day="ne">
+                NE<br>
+                <small>Neljapäev</small>
+            </button>
+
+            <button class="day-button" data-day="re">
+                RE<br>
+                <small>Reede</small>
+            </button>
+
+            <button class="day-button" data-day="la">
+                LA<br>
+                <small>Laupäev</small>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TUNNID
+    ====================================================== -->
+
+    <section class="panel">
+
+        <h2 id="dayTitle">
+            ES — ESMASPÄEV
+        </h2>
+
+        <div
+            class="schedule"
+            id="schedule"
+        ></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         KUUPÄEV
+    ====================================================== -->
+
+    <section class="panel">
+
+        <h2>
+            📆 TÄPSE KUUPÄEVA VALIMINE™
+        </h2>
+
+        <div class="date-selector">
+
+            <p>
+                <b>HOIATUS:</b>
+                kuupäeva valimine võib muuta su elu.
+            </p>
+
+            <select id="dateSelect">
+
+                <option>Esmaspäev</option>
+
+                <option>Teisipäev</option>
+
+                <option>Kolmapäev</option>
+
+                <option>Neljapäev</option>
+
+                <option>Reede</option>
+
+                <option>Laupäev</option>
+
+                <option>August</option>
+
+                <option>Juuli</option>
+
+                <option>Mai</option>
+
+                <option>November</option>
+
+                <option>September</option>
+
+            </select>
+
+            <br><br>
+
+            <button
+                class="day-button"
+                onclick="randomDate()"
+            >
+                🎲 VALI MINU EEST
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         UPLOAD
+    ====================================================== -->
+
+    <section class="panel">
+
+        <h2>
+            🖼️ LAE OMA PÄRIS TUNNIPLAAN SIIA
+        </h2>
+
+        <div class="upload-box">
+
+            <p>
+                Kui meie süsteem ei tea su tunniplaani,
+                <b>lae lihtsalt pilt üles.</b>
+            </p>
+
+            <label class="upload-button">
+
+                📸 VALI PILT
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                >
+
+            </label>
+
+            <img
+                id="uploadedImage"
+                alt="Sinu tunniplaan"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EMAIL
+    ====================================================== -->
+
+    <section class="panel">
+
+        <h2>
+            📧 KAS SEE ON SINU E-MAIL?
+        </h2>
+
+        <p>
+            Me ei tea sinu e-maili.
+            Aga meil on tunne, et see on õige.
+        </p>
+
+        <button
+            class="upload-button"
+            onclick="openEmailModal()"
+        >
+            TRUST ME BRO →
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     EMAIL MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="emailModal"
+>
+
+    <div class="modal-box">
+
+        <h2>
+            🤨 OOTA...
+        </h2>
+
+        <p>
+            Kas see on kindlasti sinu e-mail?
+        </p>
+
+        <div class="fake-email">
+            student@see-on-kindlasti-sinu.ee
+        </div>
+
+        <p>
+            Me kontrollisime seda umbes 0 korda.
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="yes"
+                onclick="confirmEmail()"
+            >
+                JAH, TRUST ME
+            </button>
+
+            <button
+                class="no"
+                onclick="closeEmailModal()"
+            >
+                EI 😡
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   TUNNIPLAANI ANDMED
+   ÕIGE INFO PILDILT
+========================================================= */
+
+const schedules = {
+
+    /* =====================================================
+       ESMASPÄEV
+    ===================================================== */
+
+    es: [
+
+        {
+            number: "3",
+            time: "10:15 - 11:00",
+            name: "Yhisk",
+            room: "B-225"
+        },
+
+        {
+            number: "4",
+            time: "11:00 - 11:45",
+            name: "Yhisk",
+            room: "B-225"
+        },
+
+        {
+            number: "5",
+            time: "12:45 - 13:30",
+            name: "VeebiRak",
+            room: "B-314"
+        },
+
+        {
+            number: "6",
+            time: "13:30 - 14:15",
+            name: "VeebiRak",
+            room: "B-314"
+        },
+
+        {
+            number: "7",
+            time: "14:30 - 15:15",
+            name: "AndmeRak",
+            room: "A-302"
+        },
+
+        {
+            number: "8",
+            time: "15:15 - 16:00",
+            name: "AndmeRak",
+            room: "A-302"
+        },
+
+        {
+            number: "9",
+            time: "16:15 - 17:00",
+            name: "Ek",
+            room: "B-419"
+        }
+
+    ],
+
+
+    /* =====================================================
+       TEISIPÄEV
+    ===================================================== */
+
+    te: [
+
+        {
+            number: "1",
+            time: "8:30 - 9:15",
+            name: "Energia",
+            room: "A-308"
+        },
+
+        {
+            number: "2",
+            time: "9:15 - 10:00",
+            name: "Energia",
+            room: "A-308"
+        },
+
+        {
+            number: "3",
+            time: "10:15 - 11:00",
+            name: "VeebiRak",
+            room: "B-103 - 105"
+        },
+
+        {
+            number: "4",
+            time: "11:00 - 11:45",
+            name: "VeebiRak",
+            room: "B-103 - 105"
+        },
+
+        {
+            number: "5",
+            time: "12:45 - 13:30",
+            name: "Keel ja kirjandus",
+            room: "A-202"
+        },
+
+        {
+            number: "6",
+            time: "13:30 - 14:15",
+            name: "Keel ja kirjandus",
+            room: "A-202"
+        },
+
+        {
+            number: "7",
+            time: "14:30 - 15:15",
+            name: "Matem",
+            room: "A-209"
+        },
+
+        {
+            number: "8",
+            time: "15:15 - 16:00",
+            name: "Matem",
+            room: "A-209"
+        }
+
+    ],
+
+
+    /* =====================================================
+       KOLMAPÄEV
+    ===================================================== */
+
+    ko: [
+
+        {
+            number: "1",
+            time: "8:30 - 9:15",
+            name: "Matem",
+            room: "A-209"
+        },
+
+        {
+            number: "2",
+            time: "9:15 - 10:00",
+            name: "Matem",
+            room: "A-209"
+        },
+
+        {
+            number: "3",
+            time: "10:15 - 11:00",
+            name: "Ajalugu",
+            room: "A-401"
+        },
+
+        {
+            number: "4",
+            time: "11:00 - 11:45",
+            name: "Ajalugu",
+            room: "A-401"
+        },
+
+        {
+            number: "5",
+            time: "12:45 - 13:30",
+            name: "KK",
+            room: "C-101"
+        },
+
+        {
+            number: "6",
+            time: "13:30 - 14:15",
+            name: "KK",
+            room: "C-101"
+        },
+
+        {
+            number: "7",
+            time: "14:30 - 15:15",
+            name: "IK",
+            room: "B-422"
+        },
+
+        {
+            number: "8",
+            time: "15:15 - 16:00",
+            name: "IK",
+            room: "B-403"
+        }
+
+    ],
+
+
+    /* =====================================================
+       NELJAPÄEV
+    ===================================================== */
+
+    ne: [
+
+        {
+            number: "1",
+            time: "8:30 - 9:15",
+            name: "Ajalugu",
+            room: "A-310"
+        },
+
+        {
+            number: "2",
+            time: "9:15 - 10:00",
+            name: "Ajalugu",
+            room: "A-310"
+        },
+
+        {
+            number: "3",
+            time: "10:15 - 11:00",
+            name: "Progl",
+            room: "A-210"
+        },
+
+        {
+            number: "4",
+            time: "11:00 - 11:45",
+            name: "Progl",
+            room: "A-210"
+        },
+
+        {
+            number: "5",
+            time: "12:45 - 13:30",
+            name: "Keel ja kirjandus",
+            room: "A-202"
+        },
+
+        {
+            number: "6",
+            time: "13:30 - 14:15",
+            name: "Keel ja kirjandus",
+            room: "A-202"
+        }
+
+    ],
+
+
+    /* =====================================================
+       REEDE
+    ===================================================== */
+
+    re: [
+
+        {
+            number: "1",
+            time: "8:30 - 9:15",
+            name: "Progl",
+            room: "A-402"
+        },
+
+        {
+            number: "2",
+            time: "9:15 - 10:00",
+            name: "Progl",
+            room: "A-402"
+        },
+
+        {
+            number: "3",
+            time: "10:15 - 11:00",
+            name: "Progl",
+            room: "A-402"
+        },
+
+        {
+            number: "4",
+            time: "11:00 - 11:45",
+            name: "Progl",
+            room: "A-402"
+        },
+
+        {
+            number: "5",
+            time: "12:45 - 13:30",
+            name: "KeemiaA",
+            room: "A-304"
+        },
+
+        {
+            number: "6",
+            time: "13:30 - 14:15",
+            name: "KeemiaA",
+            room: "A-304"
+        }
+
+    ],
+
+
+    /* =====================================================
+       LAUPÄEV
+    ===================================================== */
+
+    la: []
+
+};
+
+
+/* =========================================================
+   PÄEVA NIMED
+========================================================= */
+
+const dayNames = {
+
+    es: "ES — ESMASPÄEV",
+
+    te: "TE — TEISIPÄEV",
+
+    ko: "KO — KOLMAPÄEV",
+
+    ne: "NE — NELJAPÄEV",
+
+    re: "RE — REEDE",
+
+    la: "LA — LAUPÄEV"
+
+};
+
+
+/* =========================================================
+   TUNNIPLAANI RENDER
+========================================================= */
+
+function renderSchedule(day) {
+
+    const container =
+        document.getElementById("schedule");
+
+    const title =
+        document.getElementById("dayTitle");
+
+    title.textContent =
+        dayNames[day];
+
+    container.innerHTML = "";
+
+    const lessons =
+        schedules[day];
+
+
+    /* VABA PÄEV */
+
+    if (lessons.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="lesson jiggly">
+
+                <div class="lesson-number">
+                    ?
+                </div>
+
+                <div class="lesson-name">
+                    VABA PÄEV
+                </div>
+
+                <div class="lesson-room">
+                    ÄRA TULE
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    /* TUNNID */
+
+    lessons.forEach((lesson) => {
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            "lesson jiggly";
+
+
+        element.innerHTML = `
+
+            <div class="lesson-number">
+                ${lesson.number}
+            </div>
+
+            <div>
+
+                <div class="lesson-name">
+                    ${lesson.name}
+                </div>
+
+                <small>
+                    ⏰ ${lesson.time}
+                </small>
+
+            </div>
+
+            <div class="lesson-room">
+                📍 ${lesson.room}
+            </div>
+
+        `;
+
+
+        element.addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "📢 TUND VALITUD: " +
+                    lesson.name +
+                    " — " +
+                    lesson.room
+                );
+
+            }
+        );
+
+
+        element.addEventListener(
+            "mouseenter",
+            () => {
+
+                element.style.zIndex =
+                    "50";
+
+            }
+        );
+
+
+        element.addEventListener(
+            "mouseleave",
+            () => {
+
+                element.style.zIndex =
+                    "";
+
+            }
+        );
+
+
+        container.appendChild(element);
+
+    });
+
+}
+
+
+/* =========================================================
+   PÄEVA BUTTONID
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".day-button[data-day]"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".day-button[data-day]"
+                    )
+                    .forEach(b =>
+                        b.classList.remove("active")
+                    );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                const day =
+                    button.dataset.day;
+
+
+                localStorage.setItem(
+                    "selectedDay",
+                    day
+                );
+
+
+                renderSchedule(day);
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   SALVESTATUD PÄEV
+========================================================= */
+
+const savedDay =
+    localStorage.getItem(
+        "selectedDay"
+    ) || "es";
+
+
+const savedButton =
+    document.querySelector(
+        `[data-day="${savedDay}"]`
+    );
+
+
+if (savedButton) {
+
+    document
+        .querySelectorAll(
+            ".day-button[data-day]"
+        )
+        .forEach(b =>
+            b.classList.remove("active")
+        );
+
+
+    savedButton.classList.add(
+        "active"
+    );
+
+}
+
+
+renderSchedule(savedDay);
+
+
+/* =========================================================
+   ABSURDNE KUUPÄEV
+========================================================= */
+
+function randomDate() {
+
+    const select =
+        document.getElementById(
+            "dateSelect"
+        );
+
+
+    const random =
+        Math.floor(
+            Math.random() *
+            select.options.length
+        );
+
+
+    select.selectedIndex =
+        random;
+
+
+    showToast(
+        "📆 Kuupäev valitud. Ära küsi miks."
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+document
+    .getElementById("imageInput")
+    .addEventListener(
+        "change",
+        function(event) {
+
+            const file =
+                event.target.files[0];
+
+
+            if (!file) return;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e) {
+
+                    const image =
+                        document.getElementById(
+                            "uploadedImage"
+                        );
+
+
+                    image.src =
+                        e.target.result;
+
+
+                    image.style.display =
+                        "block";
+
+
+                    showToast(
+                        "🖼️ Pilt laaditud. Me ei loe seda, aga näeb ilus välja."
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+/* =========================================================
+   EMAIL MODAL
+========================================================= */
+
+function openEmailModal() {
+
+    document
+        .getElementById("emailModal")
+        .classList.add("show");
+
+}
+
+
+function closeEmailModal() {
+
+    document
+        .getElementById("emailModal")
+        .classList.remove("show");
+
+}
+
+
+function confirmEmail() {
+
+    closeEmailModal();
+
+
+    showToast(
+        "✅ Suurepärane. Me usaldasime sind."
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    clearTimeout(
+        window.toastTimer
+    );
+
+
+    window.toastTimer =
+        setTimeout(
+            () => {
+
+                toast.style.display =
+                    "none";
+
+            },
+            3000
+        );
+
+}
+
+</script>
+
+</body>
+</html>
